@@ -1,19 +1,18 @@
-version: '3.1'
-
 services:
-
   confluence:
-    build: ./.docker
+    image: atlassian/confluence:9.2.8
     environment:
-      - JVM_SUPPORT_RECOMMENDED_ARGS=-Xdebug -Xrunjdwp:transport=dt_socket,address=*:5005,server=y,suspend=n -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.rmi.port=9998 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dquickreload.dirs=/plugin
+      - JVM_SUPPORT_RECOMMENDED_ARGS=-Dupm.plugin.upload.enabled=true
+      - ATL_DB_TYPE=postgresql
+      - ATL_JDBC_URL=jdbc:postgresql://postgres:5432/confluence
+      - ATL_JDBC_USER=confluence
+      - ATL_JDBC_PASSWORD=confluence
+    depends_on:
+      - postgres
     ports:
-      - 5005:5005
-      - 8080:8090
-    volumes:
-      - "./target/quickreload:/plugin"
-
+      - 8090:8090
   postgres:
-    image: postgres:9.6
+    image: postgres:16
     ports:
       - 5432:5432
     environment:
