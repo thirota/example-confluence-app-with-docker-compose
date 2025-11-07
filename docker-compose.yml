@@ -1,8 +1,8 @@
 services:
   confluence:
-    image: atlassian/confluence:9.2.10
+    image: atlassian/confluence:10.1.1
     environment:
-      - JVM_SUPPORT_RECOMMENDED_ARGS=-Dupm.plugin.upload.enabled=true
+      - JVM_SUPPORT_RECOMMENDED_ARGS=-Dupm.plugin.upload.enabled=true -Datlassian.upm.signature.check.disabled=true
       - ATL_DB_TYPE=postgresql
       - ATL_JDBC_URL=jdbc:postgresql://postgres:5432/confluence
       - ATL_JDBC_USER=confluence
