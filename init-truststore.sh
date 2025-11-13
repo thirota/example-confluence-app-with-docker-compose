@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# Conigure UPM truststore
+# Configure UPM truststore
 # https://confluence.atlassian.com/upm/configuring-upm-app-signature-check-1489470544.html
 # https://confluence.atlassian.com/upm/updating-atlassian-certificates-bundles-1489470540.html
 
