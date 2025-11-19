@@ -1,4 +1,20 @@
 #!/usr/bin/env bash
+# -----------------------------------------------------------------------------
+# restore.sh
+# Restore Confluence and PostgreSQL volumes from backup tar.gz files.
+#
+# Usage:
+#   ./stop.sh       # Stop containers (must not be running)
+#   ./reset.sh      # Remove existing volumes (down -v)
+#   ./restore.sh    # Restore latest backup files into fresh volumes
+#   ./run.sh        # Start Confluence with restored data
+#
+# Note:
+#   "reset.sh" must be executed before restore.sh.
+#   restore.sh automatically uses the latest backup files:
+#       confluence_data_backup_*.tar.gz
+#       postgres_data_backup_*.tar.gz
+# -----------------------------------------------------------------------------
 set -e
 
 CONF_VOL="example-confluence-app-with-docker-compose_confluence_data"

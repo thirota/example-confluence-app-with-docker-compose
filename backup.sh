@@ -1,4 +1,19 @@
 #!/usr/bin/env bash
+# -----------------------------------------------------------------------------
+# backup.sh
+# Backup Confluence and PostgreSQL Docker volumes.
+#
+# Usage:
+#   ./stop.sh       # Stop running containers
+#   ./backup.sh     # Create tar.gz backups of both volumes
+#
+# Output:
+#   confluence_data_backup_<timestamp>.tar.gz
+#   postgres_data_backup_<timestamp>.tar.gz
+#
+# Note:
+#   Containers must be stopped before backup.
+# -----------------------------------------------------------------------------
 set -e
 
 # Volume names (adjust when project name changes)
