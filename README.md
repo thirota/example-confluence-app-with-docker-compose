@@ -1,59 +1,84 @@
-# Example of a docker-based development setup for Atlassian Confluence
+# Confluence Docker Sandbox
 
-This is an example project aimed at demonstrating how to use the official 
-Atlassian Confluence docker container (https://hub.docker.com/r/atlassian/confluence)
-when developing P2 apps for Server/Data Center.
+A lightweight and reproducible sandbox environment for running Atlassian Confluence Data Center with Docker Compose.  
+Useful for testing, plugin development, data generation, and verification before Cloud migration.
 
-The code base includes an example app created using `atlas-create-confluence-plugin`.
+---
 
-> [!NOTE]  
-> To run this on Apple Silicon, please refer to the [AppleSilicon](https://github.com/collabsoft-net/example-confluence-app-with-docker-compose/tree/AppleSilicon) branch
+## Features
 
-## Quick demo
+- Confluence Data Center (official Docker image)
+- PostgreSQL 16
+- Persistent Docker volumes
+- Utility scripts:
+  - run.sh — Start Confluence + PostgreSQL
+  - stop.sh — Stop running containers
+  - reset.sh — Remove volumes (dangerous)
+  - backup.sh — Backup Confluence & PostgreSQL volumes
+  - restore.sh — Restore from latest backups
 
-If you want to take it for a quick spin, clone this repository and run `docker-compose up`.
-This will start Atlassian Confluence (without the app installed). Once the docker container has started 
-Confluence will become available on http://localhost:8080
+---
 
-To see the actual app installed, run `atlas-mvn package` in the root directory.
-This will compile the app and place the JAR file in `./target/quickreload`. 
+## Repository Structure
 
-QuickReload will detect the changes and install the app in your Confluence instance. 
+confluence-docker-sandbox/  
+├── docker-compose.yml       # Confluence + PostgreSQL environment  
+├── run.sh                   # Start services  
+├── stop.sh                  # Stop services  
+├── reset.sh                 # Reset volumes (dangerous)  
+├── backup.sh                # Backup volumes  
+├── restore.sh               # Restore volumes  
+└── README.md                # This file
 
-If you want to see the Confluence application logs and track the QuickReload installation, 
-run `docker-compose exec confluence tail -f -n 5000 /var/atlassian/application-data/confluence/logs/atlassian-confluence.log` 
-from the root directory.
+---
 
-## Using it for your own app
+## Requirements
 
-To use this for developing your own app, you will need to copy the `docker-compose.yml` file and `.docker` folder.
+- Docker  
+- Docker Compose plugin  
+- macOS/Linux (WSL2 should work, not fully tested)
 
-Afterwards run
+---
 
+## Usage
+
+### Start Confluence
 ```
-docker-compose up -d
+./run.sh
 ```
 
-Wait 1-2 minute(s) and open http://localhost:8080. You will need to go through the Confluence set-up process and
-provide a valid license. Configure the application as desired. Once you've finished configuring Confluence, you can install the app (and any updates) by running
-
+### Stop Confluence
 ```
-atlas-mvn package
+./stop.sh
 ```
 
-This will create a new JAR file in `./target/quickreload` which will be picked up by QuickReload and installed in your Confluence instance.
-
-## I want the latest & greatest version of QuickReload
-
-You can download the latest copy of QuickReload JAR to be included in the Docker file from the Atlassian public maven repository:
-https://packages.atlassian.com/artifactory/maven-atlassian-external/com/atlassian/labs/plugins/quickreload/
-
-## Debugging your app
-
-The Confluence instance is started with JVM debugging enabled. You can connect your IDE to remote debugging on port 5005
-
-In addition, you can check the Atlassian Confluence application log by running
-
+### Reset all volumes (dangerous)
 ```
-docker-compose exec confluence tail -f -n 5000 /var/atlassian/application-data/confluence/logs/atlassian-confluence.log
+./reset.sh
 ```
+
+### Backup volumes
+```
+./backup.sh
+```
+
+### Restore from the latest backups
+```
+./restore.sh
+```
+
+---
+
+## Notes
+
+- Volumes are persistent unless removed with `reset.sh`.
+- Backups are stored as tar.gz files in the repository directory.
+- Restore script automatically finds the latest backup.
+
+---
+
+## Acknowledgements
+
+This repository was originally forked from:  
+https://github.com/collabsoft-net/example-confluence-app-with-docker-compose  
+Thanks to the original authors for providing a helpful baseline.
