@@ -17,8 +17,8 @@
 set -e
 
 # Volume names (adjust when project name changes)
-CONF_VOL="example-confluence-app-with-docker-compose_confluence_data"
-PG_VOL="example-confluence-app-with-docker-compose_postgres_data"
+CONF_VOL="confluence-docker-sandbox_confluence_data"
+PG_VOL="confluence-docker-sandbox_postgres_data"
 
 # Output directory
 OUTDIR="$PWD"

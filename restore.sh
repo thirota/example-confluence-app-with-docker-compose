@@ -17,8 +17,9 @@
 # -----------------------------------------------------------------------------
 set -e
 
-CONF_VOL="example-confluence-app-with-docker-compose_confluence_data"
-PG_VOL="example-confluence-app-with-docker-compose_postgres_data"
+# Volume names (adjust when project name changes)
+CONF_VOL="confluence-docker-sandbox_confluence_data"
+PG_VOL="confluence-docker-sandbox_postgres_data"
 
 # Find latest backup files
 CONF_BKP=$(ls -1t confluence_data_backup_*.tar.gz | head -1)
